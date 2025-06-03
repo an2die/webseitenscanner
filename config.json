@@ -1,5 +1,5 @@
 {
-    "python_path": "C:\\Users\\renza\\Anaconda3\\python.exe",
+    "python_path": "C:\\Users\\username\\Anaconda3\\python.exe",
     "encoding": "utf-8",
     "tools": [
         {
@@ -29,7 +29,7 @@
         {
             "name": "SpiderFoot \u2013 E-Mail, Webserver & Technologie (schnell, PASSIVE)",
             "executor": "python",
-            "script": "C:\\Users\\renza\\OneDrive\\Desktop\\Master Thesis\\Webseiten Scanner\\Tools\\Ativ Scan\\spiderfoot\\sf.py",
+            "script": "C:\\Users\\username\\OneDrive\\Desktop\\Master Thesis\\Webseiten Scanner\\Tools\\Ativ Scan\\spiderfoot\\sf.py",
             "arguments": "-s {target} -m sfp_email,sfp_webserver,sfp_webtech"
         },
         {
@@ -41,19 +41,19 @@
         {
             "name": "SQLMap",
             "executor": "python3",
-            "script": "C:\\Users\\renza\\OneDrive\\Desktop\\Master Thesis\\Webseiten Scanner\\Tools\\Ativ Scan\\sqlmap\\sqlmap.py",
+            "script": "C:\\Users\\username\\OneDrive\\Desktop\\Master Thesis\\Webseiten Scanner\\Tools\\Ativ Scan\\sqlmap\\sqlmap.py",
             "arguments": "-u {target} --batch --level=5 --risk=3 --threads=5"
         },
         {
             "name": "CMSeek",
             "executor": "python3",
-            "script": "C:\\Users\\renza\\OneDrive\\Desktop\\Master Thesis\\Webseiten Scanner\\Tools\\Ativ Scan\\CMSeeK\\cmseek.py",
+            "script": "C:\\Users\\username\\OneDrive\\Desktop\\Master Thesis\\Webseiten Scanner\\Tools\\Ativ Scan\\CMSeeK\\cmseek.py",
             "arguments": "--url {target} --random-agent --batch"
         },
         {
             "name": "dirsearch",
             "executor": "python",
-            "script": "C:\\Users\\renza\\OneDrive\\Desktop\\Master Thesis\\Webseiten Scanner\\Tools\\Ativ Scan\\dirsearch\\dirsearch.py",
+            "script": "C:\\Users\\username\\OneDrive\\Desktop\\Master Thesis\\Webseiten Scanner\\Tools\\Ativ Scan\\dirsearch\\dirsearch.py",
             "arguments": "-u {target} -w wordlists/common.txt,wordlists/big.txt -e php,html,txt -x 403,404 -t 50 --follow-redirects"
         },
         {
