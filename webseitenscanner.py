@@ -13,13 +13,9 @@ from tkinter import filedialog, messagebox
 import customtkinter as ctk
 from datetime import datetime, date
 import google.generativeai as genai
-
 import shlex
 
-
 CONFIG_FILE = "config.json"
-
-#- Button zum aktualiseren
 
 # ---------------------------------------------------------------------------
 # Klasse zum Laden und Speichern der Konfiguration
