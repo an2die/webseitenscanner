@@ -1,0 +1,70 @@
+{
+    "python_path": "C:\\Users\\renza\\Anaconda3\\python.exe",
+    "encoding": "utf-8",
+    "tools": [
+        {
+            "name": "Nmap \u2192 Service & Version (kurz)",
+            "executor": "",
+            "script": "nmap",
+            "arguments": "-Pn -sV {target}"
+        },
+        {
+            "name": "Nmap \u2192 OS-Erkennung & laufende Dienste (kurz)",
+            "executor": "",
+            "script": "nmap",
+            "arguments": "-Pn -T4 -O -sV {target} ascs"
+        },
+        {
+            "name": "Nmap \u2192 CVE-Pr\u00fcfung Webserver (80-443)",
+            "executor": "",
+            "script": "nmap",
+            "arguments": "-p80,443 --script vuln --script-args vulns.showall=1 {target}"
+        },
+        {
+            "name": "Nmap \u2192 Tieferer Scan (default,vuln,exploit; etwas langsamer)",
+            "executor": "",
+            "script": "nmap",
+            "arguments": "-p- -sS -T4 -sV --script \"default,vuln,exploit\" {target}"
+        },
+        {
+            "name": "SpiderFoot \u2013 E-Mail, Webserver & Technologie (schnell, PASSIVE)",
+            "executor": "python",
+            "script": "C:\\Users\\renza\\OneDrive\\Desktop\\Master Thesis\\Webseiten Scanner\\Tools\\Ativ Scan\\spiderfoot\\sf.py",
+            "arguments": "-s {target} -m sfp_email,sfp_webserver,sfp_webtech"
+        },
+        {
+            "name": "Nikto \u2013 Webserver-Schwachstellen (schnell)",
+            "executor": "perl",
+            "script": "C:\\Tools\\Nikto\\program\\nikto.pl",
+            "arguments": "-h {target} -config C:\\Tools\\Nikto\\program\\nikto.conf"
+        },
+        {
+            "name": "SQLMap",
+            "executor": "python3",
+            "script": "C:\\Users\\renza\\OneDrive\\Desktop\\Master Thesis\\Webseiten Scanner\\Tools\\Ativ Scan\\sqlmap\\sqlmap.py",
+            "arguments": "-u {target} --batch --level=5 --risk=3 --threads=5"
+        },
+        {
+            "name": "CMSeek",
+            "executor": "python3",
+            "script": "C:\\Users\\renza\\OneDrive\\Desktop\\Master Thesis\\Webseiten Scanner\\Tools\\Ativ Scan\\CMSeeK\\cmseek.py",
+            "arguments": "--url {target} --random-agent --batch"
+        },
+        {
+            "name": "dirsearch",
+            "executor": "python",
+            "script": "C:\\Users\\renza\\OneDrive\\Desktop\\Master Thesis\\Webseiten Scanner\\Tools\\Ativ Scan\\dirsearch\\dirsearch.py",
+            "arguments": "-u {target} -w wordlists/common.txt,wordlists/big.txt -e php,html,txt -x 403,404 -t 50 --follow-redirects"
+        },
+        {
+            "name": "ZAP",
+            "executor": "java",
+            "script": "-jar C:\\Programme\\ZAP\\ZAP_2.16.1\\zap-2.16.1.jar",
+            "arguments": "-cmd -quickurl {target} -quickprogress"
+        }
+    ],
+    "ki_analysis": 1,
+    "result_path": "C:/Users/renza/OneDrive/Desktop/Master Thesis/results",
+    "api_key": "AIzaSyAdXbyKVu9aMp5y1dTpHV8VyD_Q0_YNBDI",
+    "gemini_model": "gemini-2.0-flash"
+}
