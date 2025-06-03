@@ -1,6 +1,7 @@
 
-Setup / In![Screenshot 2025-06-03 190956](https://github.com/user-attachments/assets/0d727af3-70c9-49c2-a289-a682ae65c38e)
-stallation
+![Screenshot 2025-06-03 190956](https://github.com/user-attachments/assets/0d727af3-70c9-49c2-a289-a682ae65c38e)
+
+Setup / Installation
 Docker unter Windows 11
 Nach dem Klonen des Repositories erfolgen die notwendigen Installations- und Startschritte wie folgt:
 1. Installation der erforderlichen Softwarekomponenten
