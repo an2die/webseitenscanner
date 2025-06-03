@@ -1,24 +1,6 @@
-Setup / Installation
-Die Desktop-Applikation basiert auf Tkinter und erfordert daher eine grafische Laufzeitumgebung. In containerisierten Umgebungen ergeben sich hieraus plattformabhängige Besonderheiten, die im Folgenden systematisch erläutert werden.
-Technischer Hintergrund
-Docker-Container besitzen grundsätzlich keinen eigenen Display-Server. Unter Linux kann der Container den auf dem Host laufenden X11-Server (bzw. Wayland-Kompatibilitätsschicht) unmittelbar nutzen. Auf Windows steht ein solcher Dienst nicht nativ zur Verfügung; stattdessen muss ein externer X-Server (z. B. VcXsrv) betrieben werden, an den die GUI-Bibliothek ihre Zeichenbefehle absetzt. Diese Umleitung wirkt sich auf Fenster-dimensionierung, Scroll-Events und Auflösung aus und führt in der Praxis zu folgenden Einschränkungen:
-•	leichte Unschärfen bei Icons und Schriften,
-•	Scrollen ausschließlich via Scroll-Leisten (Mausrad-Events werden nicht durchgereicht),
-•	fehlerhafte Bildschirmmaße → überdimensioniertes Voll¬bildfenster.
-Aus diesem Grund bietet eine Linux-Ausführung in der Regel die bessere Nutzer¬experience. Gleichwohl wird nachstehend ein reproduzierbares Vorgehen für beide Betriebssysteme dokumentiert.
-Variante	Zielgruppe	Vorteile	Nachteile
-Docker (Windows)	Schnelle Erst¬installation	Keine Abhängig¬keiten	VcXsrv nötig
-Docker (Linux)	Native X11-Weitergabe	Kein zusätzl. X-Server	-
-„Bare-Metal “	Volle Kontrolle / Debugging	Manuelle Tool-Paths	-
-Überblick Installationsvarianten: 
-Tabelle 1: Installationsübersicht
 
-Projekt Clonen 
-Nach dem Klonen des Git-Repositorys liegt das Projekt in einer flachen Verzeichnisstruktur vor:
-Der Repository befindet sich unter :
-https://github.com/andreasmindrefined/webseitenscanner.git
- 
-Abbildung 1: Verzeichnis Struktur Repository
+Setup / In![Screenshot 2025-06-03 190956](https://github.com/user-attachments/assets/0d727af3-70c9-49c2-a289-a682ae65c38e)
+stallation
 Docker unter Windows 11
 Nach dem Klonen des Repositories erfolgen die notwendigen Installations- und Startschritte wie folgt:
 1. Installation der erforderlichen Softwarekomponenten
@@ -49,10 +31,6 @@ o	Das Container-Image webseitenscanner wird gestartet.
 Der Benutzer muss am Startskript keine Anpassungen vornehmen.
 Die Anwendung öffnet sich als Desktop-Fenster und kann wie gewohnt genutzt werden.
 
-
-
-
-
 Docker unter Kali Linux 
 Nach dem Klonen des Repositorys erfolgen die folgenden Schritte zur Einrichtung und zum Start der Anwendung:
 1. Installation der Docker Engine
@@ -78,6 +56,7 @@ Starten Sie die Anwendung mit folgendem Befehl:
            Webseitenscanner“
 Die Umgebungsvariable DISPLAY sorgt dafür, dass der Container seine GUI an den aktuell aktiven X-Server überträgt.
 Die Datei config.json wird als beschreibbares Volume in den Container eingebunden, wodurch Konfigurationsänderungen jederzeit möglich sind.
+
 Alternative Bare-Metal 
 Eine weitere Möglichkeit ist es das Python Script direkt auszuführen mit der Installeirtem Python ohne Docker auszuführen.
 1. Vorbereitung: Python und pip installieren
@@ -101,6 +80,8 @@ Das eigentliche Python-Tool wird über ein zentrales Skript gestartet:
 „python webseitenscanner.py“
  oder
 „python3 websietenscanner.py“
+
+
 Installation der Tools
 Im Rahmen der automatisierten Schwachstellenanalyse werden verschiedene spezialisierte Werkzeuge eingesetzt. Ohne eine Installation der Tools funktioniert der Webseitenscanner nicht. Während in Kali Linux als dedizierter Security-Distribution viele dieser Tools bereits vorinstalliert oder unmittelbar über die offiziellen Paketquellen verfügbar sind, ist unter Windows häufig eine manuelle Installation und Konfiguration erforderlich. Die nachfolgende Übersicht beschreibt die relevanten Werkzeuge sowie deren Installationswege unter beiden Betriebssystemen.
 1. Nmap
@@ -133,12 +114,6 @@ sudo apt install sqlmap
 •	Windows:
 Für Windows empfiehlt sich der Bezug der jeweils aktuellen Version über GitHub:
 git clone --depth 1 https://github.com/sqlmapproject/sqlmap.git sqlmap-dev
-
-
-
-
-
-
 5. SpiderFoot
 SpiderFoot ist ein Framework zur automatisierten OSINT-Erhebung (Open Source Intelligence).
 •	Kali Linux: SpiderFoot kann über die Paketquellen installiert werden:
