@@ -64,7 +64,7 @@
         }
     ],
     "ki_analysis": 1,
-    "result_path": "C:/Users/renza/OneDrive/Desktop/Master Thesis/results",
+    "result_path": "",
     "api_key": "",
     "gemini_model": "gemini-2.0-flash"
 }
