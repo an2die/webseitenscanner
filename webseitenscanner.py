@@ -13,9 +13,13 @@ from tkinter import filedialog, messagebox
 import customtkinter as ctk
 from datetime import datetime, date
 import google.generativeai as genai
+
 import shlex
 
+
 CONFIG_FILE = "config.json"
+
+#- Button zum aktualiseren
 
 # ---------------------------------------------------------------------------
 # Klasse zum Laden und Speichern der Konfiguration
@@ -240,14 +244,14 @@ class ToolTab:
         """
         exe = self.tool.get("executor", "").strip()
         scr = self.tool.get("script", "").strip()
-        args_t = self.tool.get("arguments", "{target}")
-        args   = args_t.format(target=target, output=output)
+        args = self.tool.get("arguments", "")
+        args = args.format(target=target, output=output)
 
         cmd = []
         if exe:
             cmd.append(exe)      # kein f'"{exe}"'
         cmd.append(scr)          # kein f'"{scr}"'
-        cmd += args.split()      # split auf spaces ist ok, solange deine args keine Leerzeichen-Paths enthalten
+        cmd += shlex.split(args) # split auf spaces ist ok, solange deine args keine Leerzeichen-Paths enthalten
 
         return cmd
 
@@ -357,7 +361,7 @@ class ToolTab:
         
     def generiere_report_export(self,daten):
         api_key = self.config_manager.config.get("api_key", "")
-        client = genai.Client(api_key=api_key)
+        genai.configure(api_key=api_key)
         
         prompt = """
 **SYSTEMANWEISUNG:** Du bist ein API-Endpunkt zur Berichterstellung. Generiere *ausschließlich* den angeforderten Sicherheitsbericht im Markdown-Format basierend auf den bereitgestellten `DATEN`. Füge KEINE einleitenden Sätze, Begrüßungen, Erklärungen ("Hier ist der Bericht:") oder abschließenden Bemerkungen hinzu. Beginne die Antwort direkt mit der ersten Zeile des Berichts (z.B. "## Sicherheitsbericht").
@@ -393,24 +397,21 @@ Hier sollen gefunde Inforamtionen aufgelistet werden, die nicht direkt Schwachst
 * **🔴 Hoch:** [Kurze Empfehlung 1], [Kurze Empfehlung 2]
 * **🟠 Mittel:** [Kurze Empfehlung 3]
 * **🟢 Niedrig:** [Kurze Empfehlung 4]
-*(Nur Prioritäten auflisten, für die Empfehlungen existieren. Fasse die wichtigsten Empfehlungen aus Tabelle 2 zusammen.)*
+*(Nur Prioritäten auflisten, für die Empfehlungen exigenai.Clientstieren. Fasse die wichtigsten Empfehlungen aus Tabelle 2 zusammen.)*
     """
         full_prompt = prompt + "\n```\n" + daten + "\n```"
         print(full_prompt)
         model= self.config_manager.config.get("gemini_model")
 
-        response = client.models.generate_content(
-            model=model,
-            contents=full_prompt
-            
-        )
+        model = genai.GenerativeModel(model)
+        response = model.generate_content(full_prompt)
     
         return response.text.strip()
 
     def generiere_report(self,daten):
         api_key = self.config_manager.config.get("api_key", "")
         
-        client = genai.Client(api_key=api_key)
+        genai.configure(api_key=api_key)
         
         prompt = """
 **SYSTEMANWEISUNG:** Du bist ein API-Endpunkt zur Berichterstellung. Generiere *ausschließlich* den angeforderten Sicherheitsbericht im Markdown-Format basierend auf den bereitgestellten `DATEN`. Füge KEINE einleitenden Sätze, Begrüßungen, Erklärungen ("Hier ist der Bericht:") oder abschließenden Bemerkungen hinzu. Beginne die Antwort direkt mit der ersten Zeile des Berichts (z.B. "## Sicherheitsbericht").
@@ -452,11 +453,8 @@ Hier sollen gefunde Inforamtionen aufgelistet werden, die nicht direkt Schwachst
         full_prompt = prompt + "\n```\n" + daten + "\n```"
         print(full_prompt)
 
-        response = client.models.generate_content(
-            model=model,
-            contents=full_prompt
-            
-        )
+        model = genai.GenerativeModel(model)
+        response = model.generate_content(full_prompt)
     
         return response.text.strip()
     
@@ -475,7 +473,16 @@ Hier sollen gefunde Inforamtionen aufgelistet werden, die nicht direkt Schwachst
         self.ki_text.see(tk.END) 
 
     def edit_tool(self):
-        dlg = ctk.CTkToplevel(self.app); dlg.transient(self.app); dlg.grab_set(); dlg.title("Tool bearbeiten"); dlg.geometry("600x400")
+        
+        
+        dlg = ctk.CTkToplevel(self.app)
+        dlg.title("Tool bearbeiten")
+        dlg.geometry("600x400")
+    
+        dlg.transient(self.app)
+        dlg.grab_set()
+        dlg.lift()
+        dlg.focus_force()         
         # Felder: Name, Executor, Script, Arguments
         for label, val in [("Tool-Name:", self.tool['name']), ("Executor:", self.tool.get('executor','')), ("Script/Datei:", self.tool['script']), ("Arguments:", self.tool.get('arguments','{target}'))]:
             ctk.CTkLabel(dlg, text=label).pack(pady=5)
